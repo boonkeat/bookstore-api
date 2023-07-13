@@ -1,18 +1,16 @@
 package com.bookstore.app.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name="book")
-@Getter
-@Setter
-public class Book {
+public class Book implements Serializable {
 	@Id
 	@Column(name = "id")
 	private Long id;

@@ -4,9 +4,9 @@ import com.bookstore.app.model.Author;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.List;
 

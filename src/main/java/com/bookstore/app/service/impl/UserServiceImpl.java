@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(String username, String password) {
 		// TODO Auto-generated method stub
-		return userRepository.login(username, password);
+		return userRepository.login(username, passwordEncoder.encode(password));
 	}
 
 	@Override

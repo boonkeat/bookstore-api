@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +22,12 @@ import java.util.Optional;
 	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE}, 
 	produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookstoreController {
+
+	@Autowired
+	private BookstoreService bookstoreService;
+
+	@Autowired
+	private BookstoreRepository bookstoreRepository;
 
 	@PostMapping("/retrieve")
 	public ResponseEntity<List<BookDto>> retrieve(@RequestBody BookInDto bookInDto) {
@@ -70,11 +76,5 @@ public class BookstoreController {
 			return new ResponseEntity<>(book.getId(), HttpStatus.OK);
 		}).orElseGet(() -> ResponseEntity.notFound().build());
 	}
-
-	@Autowired
-	private BookstoreService bookstoreService;
-
-	@Autowired
-	private BookstoreRepository bookstoreRepository;
 
 }

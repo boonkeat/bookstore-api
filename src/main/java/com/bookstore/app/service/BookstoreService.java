@@ -7,8 +7,6 @@ import com.bookstore.app.model.Book;
 import java.util.List;
 
 public interface BookstoreService {
-	void login(String username, String password);
-
 	Book addNewBook(BookDto bookDto);
 	
 	Book updateBook(Book book, BookDto bookDto);

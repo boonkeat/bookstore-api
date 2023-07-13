@@ -1,16 +1,17 @@
 package com.bookstore.app.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name="author")
-@Getter
-public class Author {
+public class Author implements Serializable {
 	@Id
 	@Column(name = "id")
 	private Long id;

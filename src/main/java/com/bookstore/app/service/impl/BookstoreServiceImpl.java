@@ -6,20 +6,16 @@ import com.bookstore.app.model.Book;
 import com.bookstore.app.repository.BookstoreRepository;
 import com.bookstore.app.service.BookstoreService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+@Service
 public class BookstoreServiceImpl implements BookstoreService {
 
-	@Override
-	public void login(String username, String password) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	@Autowired
+	private BookstoreRepository bookstoreRepository;
 	@Override
 	public Book addNewBook(BookDto bookDto) {
 		Book book = new Book();
@@ -37,15 +33,14 @@ public class BookstoreServiceImpl implements BookstoreService {
 
 	@Override
 	public List<BookDto> searchBook(BookInDto bookInDto) {
-		List<BookDto> bookOutDtoList = bookstoreRepository.findBookByTitleAuthors(bookInDto.getTitle(), bookInDto.getAuthors());
-		return bookOutDtoList;
+//		List<BookDto> bookOutDtoList = bookstoreRepository.findBookByTitleAuthors(bookInDto.getTitle(), bookInDto.getAuthors());
+//		return bookOutDtoList;
+		return null;
 	}
 
 	@Override
 	public void deleteBook(Book book) {
 		bookstoreRepository.delete(book);
 	}
-
-	private BookstoreRepository bookstoreRepository;
 	
 }

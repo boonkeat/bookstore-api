@@ -1,18 +1,20 @@
 package com.bookstore.app.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
+@Data
 @Table(name="user")
-@Getter
-@Setter
-public class User {
+public class User implements Serializable {
 
 	@Id
 	@Column(name = "id")
