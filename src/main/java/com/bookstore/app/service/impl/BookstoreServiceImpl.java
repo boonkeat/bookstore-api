@@ -42,5 +42,5 @@ public class BookstoreServiceImpl implements BookstoreService {
 	public void deleteBook(Book book) {
 		bookstoreRepository.delete(book);
 	}
-	
+
 }

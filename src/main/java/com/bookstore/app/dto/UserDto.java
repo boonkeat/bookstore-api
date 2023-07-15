@@ -1,20 +1,20 @@
 package com.bookstore.app.dto;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Setter
 @Getter
-public class UserDto {
-	@NotNull
+public class UserDto implements Serializable {
+    @NotNull
     private String username;
 
     @NotNull
     private String password;
-    
+
     @NotNull
     private int isAdmin;
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserInDto {
-	@NotNull
+    @NotNull
     private String username;
 
     @NotNull

@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface BookstoreService {
 	Book addNewBook(BookDto bookDto);
-	
+
 	Book updateBook(Book book, BookDto bookDto);
 
 	List<BookDto> searchBook(BookInDto bookInDto);
-	
+
 	void deleteBook(Book book);
 }

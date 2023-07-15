@@ -1,13 +1,7 @@
 package com.bookstore.app.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -18,15 +12,16 @@ public class User implements Serializable {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "username")
 	private String username;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "isAdmin")
 	private int isAdmin;
-	
+
 }

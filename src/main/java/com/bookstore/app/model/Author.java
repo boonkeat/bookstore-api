@@ -13,12 +13,13 @@ import lombok.Data;
 @Table(name="author")
 public class Author implements Serializable {
 	@Id
-	@Column(name = "id")
+	@Column(name = "id", unique = true, nullable = false)
+	@GeneratedValue
 	private Long id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "birthday")
 	private Date birthday;
 

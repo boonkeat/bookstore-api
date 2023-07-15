@@ -19,8 +19,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/bookstore/book",
-	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE}, 
-	produces = MediaType.APPLICATION_JSON_VALUE)
+		consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE},
+		produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookstoreController {
 
 	@Autowired

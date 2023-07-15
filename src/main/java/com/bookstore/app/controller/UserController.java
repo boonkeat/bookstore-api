@@ -1,9 +1,11 @@
 package com.bookstore.app.controller;
 
-import java.util.List;
-
+import com.bookstore.app.dto.UserDto;
+import com.bookstore.app.dto.UserInDto;
+import com.bookstore.app.model.User;
+import com.bookstore.app.service.UserService;
+import io.jsonwebtoken.Jwts;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,17 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookstore.app.dto.UserDto;
-import com.bookstore.app.dto.UserInDto;
-import com.bookstore.app.model.User;
-import com.bookstore.app.service.UserService;
-
-import io.jsonwebtoken.Jwts;
-
 @RestController
-@RequestMapping(value="/bookstore",
-	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE}, 
-	produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/bookstore/user",
+		consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE},
+		produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -36,13 +31,13 @@ public class UserController {
 		}
 		System.out.println("Login parameters ---> " + userInDto);
 		User user = userService.login(userInDto.getUsername(), userInDto.getPassword());
-		
+
 		if(user != null) {
 			System.out.println("User is found ---> " + user);
 			String jwtToken = Jwts.builder()
 					.claim("userId", user.getId())
 					.claim("username", user.getUsername())
-			        .claim("isAdmin", user.getIsAdmin())
+					.claim("isAdmin", user.getIsAdmin())
 					.compact();
 			return new ResponseEntity<>(jwtToken, HttpStatus.OK);
 		} else {
@@ -52,7 +47,7 @@ public class UserController {
 
 	@PostMapping("/add")
 	public ResponseEntity<Long> add(@Valid @RequestBody UserDto userDto) {
-		System.out.println("User add parameters ---> " + userDto);
+		System.out.println("User add parameters ---> " + userDto.toString());
 		User user = userService.addNewUser(userDto);
 		if(null != user) {
 			return new ResponseEntity<>(user.getId(), HttpStatus.OK);
