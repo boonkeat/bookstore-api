@@ -57,7 +57,7 @@ public class BookstoreController {
 		}
 	}
 
-	@PostMapping("/update/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<Long> update(@PathVariable("id") Long id,  @Valid @RequestBody BookDto bookDto) {
 		System.out.println("Book update parameters ---> " + bookDto);
 		Optional<Book> updateBook = bookstoreRepository.findById(id);

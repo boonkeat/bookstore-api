@@ -1,10 +1,17 @@
 package com.bookstore.app.config;
 
+
+import com.bookstore.app.service.impl.BookstoreUserDetailsServiceImpl;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -14,17 +21,48 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+    @Value("${jwt.issuer}")
+    private String jwtIssuer;
+    @Value("${jwt.type}")
+    private String jwtType;
+    @Value("${jwt.audience}")
+    private String jwtAudience;
+    @Resource
+    private BookstoreUserDetailsServiceImpl userDetailsService;
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(withDefaults())
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().permitAll()
+                                .requestMatchers("/bookstore/**").permitAll()
+//                        .requestMatchers("/bookstore/user/add").permitAll()
+//                        .requestMatchers("/bookstore/user/login").permitAll()
+//                        .requestMatchers("/bookstore/**").authenticated()
                 )
                 .httpBasic(withDefaults());
         return http.build();
     }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     /*@Configuration
     @Order(1)
     public class BookstoreAPISecurityConfig extends WebSecurityConfigurerAdapter {
@@ -75,9 +113,5 @@ public class SecurityConfig {
 //        return http.build();
 //    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return encoder;
-    }
+
 }

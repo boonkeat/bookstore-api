@@ -1,6 +1,8 @@
 package com.bookstore.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +28,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addNewUser(UserDto userDto) {
-		// TODO Auto-generated method stub
 		User user = new User();
 		user.setUsername(userDto.getUsername());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setIsAdmin(userDto.getIsAdmin());
-		return userRepository.save(user);
+		user.setIsActive(userDto.getIsActive());
+		try {
+			return userRepository.save(user);
+		} catch (DataIntegrityViolationException dataIntegrityViolationException) {
+			throw new DuplicateKeyException("Duplicate entry: " + userDto.getUsername());
+		}
 	}
 
 }

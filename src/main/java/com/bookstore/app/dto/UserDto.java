@@ -17,4 +17,7 @@ public class UserDto implements Serializable {
 
     @NotNull
     private int isAdmin;
+
+    @NotNull
+    private Boolean isActive;
 }

@@ -1,12 +1,11 @@
 package com.bookstore.app.model;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.sql.Date;
-
-import jakarta.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import java.util.Comparator;
 
 @Entity
 @Data
@@ -14,7 +13,7 @@ import lombok.Data;
 public class Author implements Serializable {
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "name")
@@ -23,7 +22,9 @@ public class Author implements Serializable {
 	@Column(name = "birthday")
 	private Date birthday;
 
-	@JsonIgnore
-	@ManyToOne
-	private Book book;
+	public int compareTo(Author o) {
+		return Comparator.comparing(Author::getName)
+				.thenComparing(Author::getBirthday)
+				.compare(this, o);
+	}
 }

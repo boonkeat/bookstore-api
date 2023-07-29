@@ -1,18 +1,27 @@
 package com.bookstore.app.dto;
 
-import com.bookstore.app.model.Author;
-import lombok.Getter;
-import lombok.Setter;
-
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
+import lombok.*;
+import org.aspectj.lang.annotation.RequiredTypes;
+
 import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookDto implements Serializable {
+
+    public BookDto(Long id, String isbn, String title, int year, double price, String genre) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.year = year;
+        this.price = price;
+        this.genre = genre;
+    }
 
     private Long id;
 
@@ -23,7 +32,7 @@ public class BookDto implements Serializable {
     private String title;
 
     @NotNull
-    private List<Author> authors;
+    private List<AuthorDto> authors;
 
     @NotNull
     @Digits(integer = 4, fraction = 0)
